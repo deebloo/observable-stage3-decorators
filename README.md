@@ -12,7 +12,7 @@ npm i
 npm start --watch
 ```
 
-```tx
+```ts
 class State {
   @observe accessor fname = "";
   @observe accessor lname = "";
