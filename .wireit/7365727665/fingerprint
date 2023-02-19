@@ -1,0 +1,1 @@
+{"fullyTracked":false,"platform":"linux","arch":"x64","nodeVersion":"v18.12.1","command":"node target/main.js","extraArgs":[],"clean":true,"files":{},"output":[],"dependencies":{"[\"/home/deebloo/projects/test\",\"tsc\"]":"4de7935d0715e6717b6bd94a4a3ff92a1eac50b51472463646a151c01849f797"},"env":{}}

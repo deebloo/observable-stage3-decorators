@@ -1,0 +1,34 @@
+{
+  "name": "node-starter",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "wireit",
+    "tsc": "wireit"
+  },
+  "wireit": {
+    "start": {
+      "command": "node target/main.js",
+      "dependencies": [
+        "tsc"
+      ]
+    },
+    "tsc": {
+      "command": "tsc --build --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "src/**/*.ts",
+        "tsconfig.json"
+      ],
+      "output": [
+        "target/**",
+        ".tsbuildinfo"
+      ]
+    }
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4",
+    "typescript": "^5.0.0-beta",
+    "wireit": "^0.9.5"
+  }
+}
