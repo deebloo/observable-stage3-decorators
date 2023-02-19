@@ -5,6 +5,8 @@ This should work with both plain classes and with custom elements.
 
 ## Demo
 
+make changes to src/main.ts to see changes
+
 ```shell
 npm i
 ```
