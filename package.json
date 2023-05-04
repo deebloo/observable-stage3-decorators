@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "prettier": "^2.8.4",
-    "typescript": "^5.0.0-beta",
+    "typescript": "^5.0.4",
     "wireit": "^0.9.5"
   }
 }

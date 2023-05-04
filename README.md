@@ -16,13 +16,12 @@ npm start --watch
 ```
 
 ```ts
+import { computed, observe } from "./observe.js";
+
 class State {
-  @observe accessor fname = "";
-  @observe accessor lname = "";
+  @observe accessor foo = "0";
+  @observe accessor bar = "false";
 
-  onPropertyChanged(val: Map<string, unknown>) {
-    // will be called once changes are settled
-  }
+  test = computed(() => this.foo + " " + this.bar)
 }
-
 ```

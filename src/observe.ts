@@ -1,39 +1,43 @@
-const schedulers = new WeakMap();
-const collectedChanges = new WeakMap();
-
-export class PropChangeMap<K, V> extends Map<K, V> {}
+let scheduler: Promise<any> | null = null;
+const effects: Array<() => void> = [];
 
 export function observe(
   base: ClassAccessorDecoratorTarget<any, any>,
-  ctx: ClassAccessorDecoratorContext
+  _: ClassAccessorDecoratorContext
 ): ClassAccessorDecoratorResult<any, any> {
   return {
     set(value: any) {
-      // Schedule update
-      if (!schedulers.has(this)) {
-        schedulers.set(
-          this,
-          Promise.resolve().then(() => {
-            if (this.onPropertyChanged) {
-              this.onPropertyChanged(collectedChanges.get(this));
-            }
+      if (!scheduler) {
+        scheduler = Promise.resolve().then(() => {
+          scheduler = null;
 
-            schedulers.delete(this);
-            collectedChanges.delete(this);
-          })
-        );
+          for (let effect of effects) {
+            effect();
+          }
+        })
       }
-
-      let changes = collectedChanges.get(this);
-
-      if (!changes) {
-        changes = new PropChangeMap();
-        collectedChanges.set(this, changes);
-      }
-
-      changes.set(ctx.name, value);
 
       base.set.call(this, value);
     },
   };
+}
+
+export function effect(cb: () => void) {
+  const index = effects.push(cb) - 1;
+
+  return () => {
+    effects.splice(index, 1);
+  }
+}
+
+export function computed<T>(cb: () => T) {
+  const val = {
+    value: cb()
+  };
+
+  effect(() => {
+    val.value = cb();
+  });
+
+  return val;
 }
